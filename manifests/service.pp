@@ -6,9 +6,14 @@ define dovecot::service (
     /(?i-mx:centos|fedora|redhat|scientific)/ => 'dovecot',
   }
 
+  $depends = $::operatingsystem ? {
+    /(?i-mx:centos|fedora|redhat|scientific)/ => 'dovecot',
+  }
+
   service { $service:
-    ensure => $ensure,
-    enable => $enable,
+    ensure  => $ensure,
+    enable  => $enable,
+    require => Package[$depends],
   }
 
 }
